@@ -54,7 +54,7 @@ resource "null_resource" "exasol_cluster_wait" {
 
   provisioner "local-exec" {
     command = <<EOF
-    python ${path.module}/scripts/exasol_xmlrpc.py \
+    python3 ${path.module}/scripts/exasol_xmlrpc.py \
       --license-server-address \
       ${aws_cloudformation_stack.exasol_cluster.outputs["ManagementServerPublicIP"]} \
       --username admin \

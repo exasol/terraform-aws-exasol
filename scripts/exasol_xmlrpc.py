@@ -1,8 +1,8 @@
 import argparse
 import ssl
 import time
-from xmlrpclib import Fault
-from xmlrpclib import Server as xmlrpc
+from xmlrpc.client import Fault
+from xmlrpc.client import Server as xmlrpc
 
 WAIT_MAX_ITERATIONS = 12
 WAIT_INITIAL_SLEEP_TIME = 60 * 5 # every 5 minutes, total 12 * 5 = 1h wait
@@ -16,7 +16,7 @@ def edit_bucket_fs(server):
 def create_buckets(server, args):
     for bucket in args.buckets:
         try:
-            print "Creating bucket '%s'" % bucket
+            print("Creating bucket '%s'" % bucket)
             server.bfsdefault.addBucket({
                 'bucket_name': bucket,
                 'public_bucket': True,
@@ -42,7 +42,7 @@ def wait(server):
     max_iterations = WAIT_MAX_ITERATIONS
 
     while max_iterations > 0:
-        print "Waiting iteration count: %s" % max_iterations
+        print("Waiting iteration count: %s" % max_iterations)
 
         started = has_started(server)
         if started:
@@ -60,7 +60,7 @@ def create_server(address, username, password):
     return server
 
 def check_db_started(server):
-    print "Checking if 'exadb' database is running"
+    print("Checking if 'exadb' database is running")
     if not server.db_exadb.runningDatabase():
         raise Exception("Exasol database is not started!")
 
@@ -72,7 +72,7 @@ def run():
     parser.add_argument('--buckets', type=str, nargs='*')
 
     args = parser.parse_args()
-    print "The following arguments are provided: '%s'" % args
+    print("The following arguments are provided: '%s'" % args)
 
     try:
         server = create_server(args.license_server_address, args.username, args.password)
@@ -82,7 +82,7 @@ def run():
         if args.buckets:
             create_buckets(server, args)
     except Exception as ex:
-        print 'Exception "%s" was thrown!' % str(ex)
+        print('Exception "%s" was thrown!' % str(ex))
         return 1
 
 if __name__ == "__main__":
