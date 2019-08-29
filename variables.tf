@@ -24,6 +24,11 @@ variable "ami_image_id" {
   default = null
 }
 
+variable "ami_image_owner" {
+  type    = string
+  default = "679593333241"
+}
+
 variable "database_name" {
   type = string
 }

@@ -1,11 +1,11 @@
 
 data "aws_ami" "exasol" {
   most_recent = true
-  owners = ["self"]
+  owners = ["${var.ami_image_owner}"]
 
   filter {
     name   = "name"
-    values = ["${var.ami_image_name}"]
+    values = ["*${var.ami_image_name}-*"]
   }
 }
 
