@@ -26,6 +26,10 @@ run_terraform_validate () {
   terraform validate -var "region=${AWS_REGION}"
 }
 
+run_tflint () {
+  tflint .
+}
+
 run_clean_worktree_check () {
   # To be executed after all other steps, to ensures that there is no
   # uncommitted code and there are no untracked files, which means
@@ -42,4 +46,5 @@ run_clean_worktree_check () {
 run_terraform_init
 run_terraform_fmt
 run_terraform_validate
+run_tflint
 run_clean_worktree_check
