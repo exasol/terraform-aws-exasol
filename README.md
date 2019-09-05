@@ -1,3 +1,4 @@
+[![Build Status][travis-badge]][travis-link]
 [![GitHub Latest Release][gh-release-badge]][gh-release-link]
 ![Terraform Version][terraform-version]
 
@@ -55,7 +56,7 @@ The following configuration variables are available.
 |:----------------------------------|:-----------------|:---------------------------------------------------------------------------------------|
 |``cluster_name``                   |``exasol-cluster``|A name for the to be deployed cluster.                                                  |
 |``database_name``                  |``exadb``         |A name of the Exasol database.                                                          |
-|``ami_image_id``                   |``null``          |An Exasol release AMI image id, e.g, `ami-05fad9f0c2609cef0'.                           |
+|``ami_image_id``                   |``null``          |An Exasol release AMI image id, e.g, `ami-05fad9f0c2609cef0`.                           |
 |``ami_image_name``                 |*<none>*          |An Exasol release AMI image name, e.g, `R6.1.5-PAYG`.                                   |
 |``sys_user_password``              |*<none>*          |An Exasol database `sys` user password.                                                 |
 |``admin_user_password``            |*<none>*          |An EXAOperation `admin` user password.                                                  |
@@ -76,17 +77,24 @@ The following configuration variables are available.
   will be used corresponding to the provided `ami_image_name` value.
 * The `security_group_id` should have at least these ports open for basic
   operations.
-  - ``22`` for SSH
-  - ``443`` for EXAOperation
-  - ``8563`` for Exasol database
-  - ``8835`` for Cloud UI
+  * ``22`` for SSH
+  * ``443`` for EXAOperation
+  * ``8563`` for Exasol database
+  * ``8835`` for Cloud UI
 * The `project` input value is also used to create a `exa:project` tag.
 * Similarly, the `owner` input value is used to create a `exa:owner` tag.
 
 ## Outputs
 
+| Output name                       | Description
+|:----------------------------------|:-----------------------------------------------|
+|``management_server_ip``           |The Exasol management server public ip address. |
+|``first_datanode_ip``              |The first Exasol datanode public ip address.    |
+
 ## Contributing
 
+[travis-badge]: https://travis-ci.org/exasol/terraform-aws-exasol.svg?branch=master
+[travis-link]: https://travis-ci.org/exasol/terraform-aws-exasol
 [gh-release-badge]: https://img.shields.io/github/tag/exasol/terraform-aws-exasol.svg?label=latest
 [gh-release-link]: https://github.com/exasol/terraform-aws-exasol/releases/latest
 [terraform-version]: https://img.shields.io/badge/tf-%3E%3D0.12.0-blue.svg
