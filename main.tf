@@ -20,14 +20,19 @@ resource "aws_cloudformation_stack" "exasol_cluster" {
     DBPassword                = var.sys_user_password
     ExasolPassword            = var.admin_user_password
     SubnetId                  = var.subnet_id
-    DBSecurityGroup           = var.security_group
+    DBSecurityGroup           = var.security_group_id
     LicenseServerInstanceType = var.management_server_instance_type
     DatabaseNodeInstanceType  = var.datanode_instance_type
     DBNodeCount               = var.datanode_count
     StandbyNode               = var.standbynode_count
     KeyName                   = var.key_pair_name
     ImageId                   = var.ami_image_id == null ? var.ami_image_id : data.aws_ami.exasol.id
-    PublicIP                  = var.public_ips
+
+    PublicIP                  = var.public_ip
+    CreateS3Bucket            = var.create_s3_bucket
+    CreateS3Endpoint          = var.create_s3_endpoint
+    CreateKMSEndpoint         = var.create_kms_endpoint
+    CreateEC2Endpoint         = var.create_ec2_endpoint
   }
 
   tags = {
