@@ -23,7 +23,8 @@ provider "aws" {
 }
 
 module "exasol" {
-  source                          = "../terraform-aws-exasol"
+  source                          = "exasol/exasol/aws"
+  version                         = "0.0.1"
 
   cluster_name                    = "exasol-cluster"
   database_name                   = "exadb"
