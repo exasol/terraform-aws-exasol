@@ -11,7 +11,6 @@ AWS](https://aws.amazon.com/).
 ## Prerequisites
 
 * [terraform][terraform-install] version `>= 0.12`
-* [aws-cli][aws-cli], an AWS command line interface
 * [aws-cli profile][aws-cli-profile] with administrative access
 * [python3][python3-install]
 
@@ -37,13 +36,13 @@ module "exasol" {
   standbynode_count               = "0"
 
   # These values can be obtained from other modules.
-  key_pair_name                   = "mo-exasol-key-pair"
+  key_pair_name                   = "exasol-key-pair"
   subnet_id                       = "subnet-ed85b690"
   security_group                  = "sg-07599522f13906845"
 
   # Variables used in tags.
   project                         = "exasol-terraformed"
-  owner                           = "mo@exasol.com"
+  owner                           = "user@exasol.com"
   environment                     = "dev"
 }
 ```
@@ -92,6 +91,8 @@ The following configuration variables are available.
 |``first_datanode_ip``              |The first Exasol datanode public ip address.    |
 
 ## Contributing
+
+Please see [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
 [travis-badge]: https://travis-ci.org/exasol/terraform-aws-exasol.svg?branch=master
 [travis-link]: https://travis-ci.org/exasol/terraform-aws-exasol
