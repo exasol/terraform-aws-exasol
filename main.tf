@@ -26,12 +26,13 @@ resource "aws_cloudformation_stack" "exasol_cluster" {
     DBNodeCount               = var.datanode_count
     StandbyNode               = var.standbynode_count
     KeyName                   = var.key_pair_name
-    ImageId                   = var.ami_image_id == null ? var.ami_image_id : data.aws_ami.exasol.id
+    ImageId                   = var.ami_image_id == null ? data.aws_ami.exasol.id : var.ami_image_id
     PublicIP                  = var.public_ip
     CreateS3Bucket            = var.create_s3_bucket
     CreateS3Endpoint          = var.create_s3_endpoint
     CreateKMSEndpoint         = var.create_kms_endpoint
     CreateEC2Endpoint         = var.create_ec2_endpoint
+    License                   = var.license == null ? null : "${file(var.license)}"
   }
 
   tags = {

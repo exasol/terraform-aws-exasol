@@ -54,6 +54,12 @@ variable "public_ip" {
   type        = string
 }
 
+variable "license" {
+  default     = null
+  description = "A path to license file that can be used with Bring Your Own License (BYOL) installation."
+  type        = string
+}
+
 variable "create_s3_bucket" {
   default     = true
   description = "Whether to create S3 bucket for a default backup location."
