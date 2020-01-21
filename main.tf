@@ -13,7 +13,7 @@ resource "aws_cloudformation_stack" "exasol_cluster" {
   name         = var.cluster_name
   capabilities = ["CAPABILITY_IAM"]
   on_failure   = "DELETE"
-  template_url = "https://exasol-cf-templates.s3.eu-central-1.amazonaws.com/cloudformation_template_v0.0.1.yml"
+  template_url = "https://exasol-cf-templates.s3.eu-central-1.amazonaws.com/cloudformation_template_v0.0.2.yml"
 
   parameters = {
     DBSystemName              = var.database_name
@@ -42,7 +42,7 @@ resource "aws_cloudformation_stack" "exasol_cluster" {
     Owner         = var.owner
     "exa:owner"   = var.owner
     Environment   = var.environment
-    WaitedOn      = "${var.waited_on}"
+    WaitedOn      = var.waited_on == null ? "waited_on_null" : var.waited_on
   }
 }
 
@@ -51,7 +51,7 @@ data "aws_instance" "exasol_first_datanode" {
 }
 
 resource "null_resource" "exasol_cluster_wait" {
-  depends_on = ["aws_cloudformation_stack.exasol_cluster"]
+  depends_on = [aws_cloudformation_stack.exasol_cluster]
 
   triggers = {
     always = "${uuid()}"
@@ -70,5 +70,5 @@ resource "null_resource" "exasol_cluster_wait" {
 }
 
 resource "null_resource" "exasol_waited_on" {
-  depends_on = ["null_resource.exasol_cluster_wait"]
+  depends_on = [null_resource.exasol_cluster_wait]
 }

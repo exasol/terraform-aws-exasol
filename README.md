@@ -39,7 +39,7 @@ module "exasol" {
   # These values can be obtained from other modules.
   key_pair_name                   = "exasol-key-pair"
   subnet_id                       = "subnet-ed85b690"
-  security_group                  = "sg-07599522f13906845"
+  security_group_id               = "sg-07599522f13906845"
 
   # Variables used in tags.
   project                         = "exasol-terraformed"
@@ -53,23 +53,25 @@ module "exasol" {
 The following configuration variables are available.
 
 | Variable name                     | Default          | Description
-|:----------------------------------|:-----------------|:---------------------------------------------------------------------------------------|
-|``cluster_name``                   |``exasol-cluster``|A name for the to be deployed cluster.                                                  |
-|``database_name``                  |``exadb``         |A name of the Exasol database.                                                          |
-|``ami_image_id``                   |``null``          |An Exasol release AMI image id, e.g, `ami-05fad9f0c2609cef0`.                           |
-|``ami_image_name``                 |*<none>*          |An Exasol release AMI image name, e.g, `R6.1.5-PAYG`.                                   |
-|``sys_user_password``              |*<none>*          |An Exasol database `sys` user password.                                                 |
-|``admin_user_password``            |*<none>*          |An EXAOperation `admin` user password.                                                  |
-|``management_server_instance_type``|``m5.large``      |An EC2 instance type for management server.                                             |
-|``datanode_instance_type``         |``m5.xlarge``     |An EC2 instance type for Exasol datanodes.                                              |
-|``datanode_count``                 |``3``             |The number of Exasol datanodes.                                                         |
-|``standbynode_count``              |``0``             |The number of Exasol standby nodes.                                                     |
-|``key_pair_name``                  |*<none>*          |An EC2 key pair name to attach to nodes.                                                |
-|``subnet_id``                      |*<none>*          |A subnet id to deploy the Exasol cluster.                                               |
-|``security_group_id``              |*<none>*          |A security group id to attach to nodes. Please ensure that it has correct inbound rules.|
-|``project``                        |``""``            |A name for the project used in resource tagging.                                        |
-|``owner``                          |``""``            |An email address of the owner used in resource tagging.                                 |
-|``environment``                    |``""``            |An environment name to deploy the cluster used in resource tagging.                     |
+|:----------------------------------|:-----------------|:------------------------------------------------------------------------------------------------|
+|``cluster_name``                   |``exasol-cluster``|A name for the to be deployed cluster.                                                           |
+|``database_name``                  |``exadb``         |A name of the Exasol database.                                                                   |
+|``ami_image_id``                   |``null``          |An Exasol release AMI image id, e.g, `ami-05fad9f0c2609cef0`.                                    |
+|``ami_image_name``                 |*<none>*          |An Exasol release AMI image name, e.g, `R6.1.5-PAYG` or `R6.2.1-BYOL`.                           |
+|``sys_user_password``              |*<none>*          |An Exasol database `sys` user password.                                                          |
+|``admin_user_password``            |*<none>*          |An EXAOperation `admin` user password.                                                           |
+|``management_server_instance_type``|``m5.large``      |An EC2 instance type for management server.                                                      |
+|``datanode_instance_type``         |``m5.xlarge``     |An EC2 instance type for Exasol datanodes.                                                       |
+|``datanode_count``                 |``3``             |The number of Exasol datanodes.                                                                  |
+|``standbynode_count``              |``0``             |The number of Exasol standby nodes.                                                              |
+|``license``                        |``null``          |An optional path for the Bring Your Own (BYOL) image license file, e.g, `./mor_byol_license.xml`.|
+|``key_pair_name``                  |*<none>*          |An EC2 key pair name to attach to nodes.                                                         |
+|``subnet_id``                      |*<none>*          |A subnet id to deploy the Exasol cluster.                                                        |
+|``security_group_id``              |*<none>*          |A security group id to attach to nodes. Please ensure that it has correct inbound rules.         |
+|``project``                        |``""``            |A name for the project used in resource tagging.                                                 |
+|``owner``                          |``""``            |An email address of the owner used in resource tagging.                                          |
+|``environment``                    |``""``            |An environment name to deploy the cluster used in resource tagging.                              |
+|``waited_on``                      |``null``          |An optional variable that can include other resource id-s to wait before deploying the cluster.  |
 
 ### Remarks
 
