@@ -42,7 +42,7 @@ resource "aws_cloudformation_stack" "exasol_cluster" {
     Owner         = var.owner
     "exa:owner"   = var.owner
     Environment   = var.environment
-    WaitedOn      = "${var.waited_on}"
+    WaitedOn      = var.waited_on == null ? "waited_on_null" : var.waited_on
   }
 }
 

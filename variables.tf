@@ -132,7 +132,7 @@ variable "environment" {
 }
 
 variable "waited_on" {
-  default     = ""
+  default     = null
   description = "A variable that this module can wait on."
   type        = string
 }
