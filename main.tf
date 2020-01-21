@@ -51,7 +51,7 @@ data "aws_instance" "exasol_first_datanode" {
 }
 
 resource "null_resource" "exasol_cluster_wait" {
-  depends_on = ["aws_cloudformation_stack.exasol_cluster"]
+  depends_on = [aws_cloudformation_stack.exasol_cluster]
 
   triggers = {
     always = "${uuid()}"
@@ -70,5 +70,5 @@ resource "null_resource" "exasol_cluster_wait" {
 }
 
 resource "null_resource" "exasol_waited_on" {
-  depends_on = ["null_resource.exasol_cluster_wait"]
+  depends_on = [null_resource.exasol_cluster_wait]
 }
