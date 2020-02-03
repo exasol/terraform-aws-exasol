@@ -32,6 +32,7 @@ resource "aws_cloudformation_stack" "exasol_cluster" {
     CreateS3Endpoint          = var.create_s3_endpoint
     CreateKMSEndpoint         = var.create_kms_endpoint
     CreateEC2Endpoint         = var.create_ec2_endpoint
+    OpenPorts                 = var.open_ports
     License                   = var.license == null ? null : "${file(var.license)}"
   }
 

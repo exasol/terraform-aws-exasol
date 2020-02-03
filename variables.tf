@@ -54,12 +54,6 @@ variable "public_ip" {
   type        = string
 }
 
-variable "license" {
-  default     = null
-  description = "A path to license file that can be used with Bring Your Own License (BYOL) installation."
-  type        = string
-}
-
 variable "create_s3_bucket" {
   default     = true
   description = "Whether to create S3 bucket for a default backup location."
@@ -81,6 +75,18 @@ variable "create_kms_endpoint" {
 variable "create_ec2_endpoint" {
   default     = false
   description = "Whether to create EC2 endpoint. Set to false if instances are publicly available or if EC2 endpoint already exists."
+  type        = string
+}
+
+variable "open_ports" {
+  default     = "20,22,443,6583,8563,8835"
+  description = "A comma separated list of open ports or port ranges."
+  type        = string
+}
+
+variable "license" {
+  default     = null
+  description = "A path to license file that can be used with Bring Your Own License (BYOL) installation."
   type        = string
 }
 
