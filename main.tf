@@ -13,7 +13,7 @@ resource "aws_cloudformation_stack" "exasol_cluster" {
   name         = var.cluster_name
   capabilities = ["CAPABILITY_IAM"]
   on_failure   = "DELETE"
-  template_url = "https://exasol-cf-templates.s3.eu-central-1.amazonaws.com/cloudformation_template_v0.0.2.yml"
+  template_url = "https://exasol-cf-templates.s3.eu-central-1.amazonaws.com/cloudformation_template_v0.0.3.yml"
 
   parameters = {
     DBSystemName              = var.database_name
@@ -51,7 +51,12 @@ data "aws_instance" "exasol_first_datanode" {
   instance_id = "${element(split(",", aws_cloudformation_stack.exasol_cluster.outputs["Datanodes"]), 0)}"
 }
 
+data "aws_instance" "management_server" {
+  instance_id = "${aws_cloudformation_stack.exasol_cluster.outputs["ManagementServer"]}"
+}
+
 resource "null_resource" "exasol_cluster_wait" {
+  count      = var.public_ip ? 1 : 0
   depends_on = [aws_cloudformation_stack.exasol_cluster]
 
   triggers = {
@@ -62,7 +67,7 @@ resource "null_resource" "exasol_cluster_wait" {
     command = <<EOF
     python3 ${path.module}/scripts/exasol_xmlrpc.py \
       --license-server-address \
-      ${aws_cloudformation_stack.exasol_cluster.outputs["ManagementServerPublicIP"]} \
+      ${data.aws_instance.management_server.public_ip} \
       --username admin \
       --password ${var.admin_user_password}
   EOF
