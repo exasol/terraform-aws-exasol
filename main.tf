@@ -64,8 +64,7 @@ resource "null_resource" "exasol_cluster_wait" {
       --license-server-address \
       ${aws_cloudformation_stack.exasol_cluster.outputs["ManagementServerPublicIP"]} \
       --username admin \
-      --password ${var.admin_user_password} \
-      --buckets artifacts
+      --password ${var.admin_user_password}
   EOF
   }
 }
