@@ -1,6 +1,6 @@
 
 output "management_server_ip" {
-  value = "${aws_cloudformation_stack.exasol_cluster.outputs["ManagementServerPublicIP"]}"
+  value = "${data.aws_instance.management_server.public_ip}"
 }
 
 output "first_datanode_ip" {
