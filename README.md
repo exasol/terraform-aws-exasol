@@ -35,6 +35,7 @@ module "exasol" {
   datanode_instance_type          = "m5.2xlarge"
   datanode_count                  = "3"
   standbynode_count               = "0"
+  public_ip                       = true
 
   # These values can be obtained from other modules.
   key_pair_name                   = "exasol-key-pair"
@@ -65,6 +66,7 @@ The following configuration variables are available.
 |``datanode_count``                 |``3``             |The number of Exasol datanodes.                                                                  |
 |``standbynode_count``              |``0``             |The number of Exasol standby nodes.                                                              |
 |``license``                        |``null``          |An optional path for the Bring Your Own (BYOL) image license file, e.g, `./mor_byol_license.xml`.|
+|``public_ip``                      |``true``          |A boolean variable whether to set public IPv4 address to nodes. Skips waiting if set to `false`. |
 |``key_pair_name``                  |*<none>*          |An EC2 key pair name to attach to nodes.                                                         |
 |``subnet_id``                      |*<none>*          |A subnet id to deploy the Exasol cluster.                                                        |
 |``security_group_id``              |*<none>*          |A security group id to attach to nodes. Please ensure that it has correct inbound rules.         |
@@ -97,8 +99,8 @@ The following configuration variables are available.
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
-[travis-badge]: https://travis-ci.org/exasol/terraform-aws-exasol.svg?branch=master
-[travis-link]: https://travis-ci.org/exasol/terraform-aws-exasol
+[travis-badge]: https://travis-ci.com/exasol/terraform-aws-exasol.svg?branch=master
+[travis-link]: https://travis-ci.com/exasol/terraform-aws-exasol
 [gh-release-badge]: https://img.shields.io/github/tag/exasol/terraform-aws-exasol.svg?label=latest
 [gh-release-link]: https://github.com/exasol/terraform-aws-exasol/releases/latest
 [terraform-version]: https://img.shields.io/badge/tf-%3E%3D0.12.0-blue.svg
