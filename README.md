@@ -1,8 +1,10 @@
+# Exasol AWS Terraform Module
+
+<img alt="terraform-aws-exasol logo" src="docs/images/terraform-aws-exasol_128x128.png" style="float:left; padding:0px 10px 10px 10px;"/>
+
 [![Build Status][travis-badge]][travis-link]
 [![GitHub Latest Release][gh-release-badge]][gh-release-link]
 ![Terraform Version][terraform-version]
-
-# Exasol AWS Terraform Module
 
 A [Terraform](https://www.terraform.io) module to create an
 [Exasol](https://www.exasol.com) cluster on [Amazon
