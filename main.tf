@@ -1,17 +1,19 @@
-
 data "aws_ami" "exasol" {
   most_recent = true
-  owners      = ["${var.ami_image_owner}"]
+  owners = [
+  var.ami_image_owner]
 
   filter {
-    name   = "name"
-    values = ["*${var.ami_image_name}-*"]
+    name = "name"
+    values = [
+    "*${var.ami_image_name}-*"]
   }
 }
 
 resource "aws_cloudformation_stack" "exasol_cluster" {
-  name         = var.cluster_name
-  capabilities = ["CAPABILITY_IAM"]
+  name = var.cluster_name
+  capabilities = [
+  "CAPABILITY_IAM"]
   on_failure   = "DELETE"
   template_url = "https://exasol-cf-templates.s3.eu-central-1.amazonaws.com/cloudformation_template_v0.0.3.yml"
 
@@ -33,34 +35,36 @@ resource "aws_cloudformation_stack" "exasol_cluster" {
     CreateKMSEndpoint         = var.create_kms_endpoint
     CreateEC2Endpoint         = var.create_ec2_endpoint
     OpenPorts                 = var.open_ports
-    License                   = var.license == null ? null : "${file(var.license)}"
+    License                   = var.license == null ? null : file(var.license)
   }
 
   tags = {
-    Name          = "exasol-${var.cluster_name}-${var.environment}"
-    Project       = var.project
-    "exa:project" = var.project
-    Owner         = var.owner
-    "exa:owner"   = var.owner
-    Environment   = var.environment
-    WaitedOn      = var.waited_on == null ? "waited_on_null" : var.waited_on
+    Name               = "exasol-${var.cluster_name}-${var.environment}"
+    Project            = var.project
+    "exa:project"      = var.project
+    "exa:project.name" = var.project_name
+    Owner              = var.owner
+    "exa:owner"        = var.owner
+    Environment        = var.environment
+    WaitedOn           = var.waited_on == null ? "waited_on_null" : var.waited_on
   }
 }
 
 data "aws_instance" "exasol_first_datanode" {
-  instance_id = "${element(split(",", aws_cloudformation_stack.exasol_cluster.outputs["Datanodes"]), 0)}"
+  instance_id = element(split(",", aws_cloudformation_stack.exasol_cluster.outputs["Datanodes"]), 0)
 }
 
 data "aws_instance" "management_server" {
-  instance_id = "${aws_cloudformation_stack.exasol_cluster.outputs["ManagementServer"]}"
+  instance_id = aws_cloudformation_stack.exasol_cluster.outputs["ManagementServer"]
 }
 
 resource "null_resource" "exasol_cluster_wait" {
-  count      = var.public_ip ? 1 : 0
-  depends_on = [aws_cloudformation_stack.exasol_cluster]
+  count = var.public_ip ? 1 : 0
+  depends_on = [
+  aws_cloudformation_stack.exasol_cluster]
 
   triggers = {
-    always = "${uuid()}"
+    always = uuid()
   }
 
   provisioner "local-exec" {
@@ -75,5 +79,6 @@ resource "null_resource" "exasol_cluster_wait" {
 }
 
 resource "null_resource" "exasol_waited_on" {
-  depends_on = [null_resource.exasol_cluster_wait]
+  depends_on = [
+  null_resource.exasol_cluster_wait]
 }
