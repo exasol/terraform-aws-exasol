@@ -40,6 +40,7 @@ resource "aws_cloudformation_stack" "exasol_cluster" {
     Name          = "exasol-${var.cluster_name}-${var.environment}"
     Project       = var.project
     "exa:project" = var.project
+    "exa:project.name" = var.project_name
     Owner         = var.owner
     "exa:owner"   = var.owner
     Environment   = var.environment

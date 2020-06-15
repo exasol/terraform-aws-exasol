@@ -125,6 +125,12 @@ variable "project" {
   type        = string
 }
 
+variable "project_name" {
+  default     = ""
+  description = "A readable name of the project. Also used in tags."
+  type        = string
+}
+
 variable "owner" {
   default     = ""
   description = "An email address of the owner. Also used in tags."

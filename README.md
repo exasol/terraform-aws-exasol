@@ -46,8 +46,74 @@ module "exasol" {
 
   # Variables used in tags.
   project                         = "exasol-terraformed"
+  project_name                    = "exasol-terraformed"
   owner                           = "user@exasol.com"
   environment                     = "dev"
+}
+```
+
+Typically you want to add a security group like:
+
+```
+resource "aws_security_group" "exasol_db_security_group" {
+  name = "exasol_cluster_security_group"
+  description = "Security group for exasol cluster"
+  vpc_id = "${aws_vpc.dynamodb_test_vpc.id}"
+
+  ingress {
+    description = "SSH from VPC"
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = [
+      "0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "HTTPS from VPC"
+    from_port = 443
+    to_port = 443
+    protocol = "tcp"
+    cidr_blocks = [
+      "0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "SQL from VPC"
+    from_port = 8563
+    to_port = 8563
+    protocol = "tcp"
+    cidr_blocks = [
+      "0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "BucketFS"
+    from_port = 2580
+    protocol = "tcp"
+    to_port = 2580
+    cidr_blocks = [
+      "0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port = 0
+    protocol = "-1"
+    to_port = 0
+    self = true
+  }
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = [
+      "0.0.0.0/0"]
+  }
+
+  tags = {
+    ...
+  }
 }
 ```
 
@@ -72,7 +138,8 @@ The following configuration variables are available.
 |``key_pair_name``                  |*<none>*          |An EC2 key pair name to attach to nodes.                                                         |
 |``subnet_id``                      |*<none>*          |A subnet id to deploy the Exasol cluster.                                                        |
 |``security_group_id``              |*<none>*          |A security group id to attach to nodes. Please ensure that it has correct inbound rules.         |
-|``project``                        |``""``            |A name for the project used in resource tagging.                                                 |
+|``project``                        |``""``            |A name for the project used in resource tagging as ``exa:project`` and ``Project``.              |
+|``project_name``                   |``""``            |A name for the project used in resource tagging as ``exa:project.name``                          |
 |``owner``                          |``""``            |An email address of the owner used in resource tagging.                                          |
 |``environment``                    |``""``            |An environment name to deploy the cluster used in resource tagging.                              |
 |``waited_on``                      |``null``          |An optional variable that can include other resource id-s to wait before deploying the cluster.  |
