@@ -30,7 +30,7 @@ module "exasol" {
 
   cluster_name                    = "exasol-cluster"
   database_name                   = "exadb"
-  ami_image_name                  = "R6.2.1-PAYG"
+  ami_image_name                  = "R6.2.3-PAYG"
   sys_user_password               = "eXaSol1337DB"
   admin_user_password             = "eXaSol1337OP"
   management_server_instance_type = "m5.xlarge"
@@ -52,13 +52,25 @@ module "exasol" {
 }
 ```
 
-Typically you want to add a security group like:
+If you don't already have a vpc and security group you can use:
 
-```
+```hcl
+resource "aws_vpc" "exasol_db_vpc" {
+  cidr_block = "10.0.0.0/16"
+  tags = {
+    "exa:owner": "user@exasol.com",
+    "exa:deputy": "user@exasol.com"
+    "exa:project": "exasol-terraformed"
+    "exa:project.name": "exasol-terraformed"
+    "exa:stage": "development"
+    "Name": "VPC for exasol cluster"
+  }
+}
+
 resource "aws_security_group" "exasol_db_security_group" {
   name = "exasol_cluster_security_group"
   description = "Security group for exasol cluster"
-  vpc_id = "${aws_vpc.dynamodb_test_vpc.id}"
+  vpc_id = "${aws_vpc.exasol_db_vpc.id}"
 
   ingress {
     description = "SSH from VPC"
@@ -112,9 +124,20 @@ resource "aws_security_group" "exasol_db_security_group" {
   }
 
   tags = {
-    ...
+   "exa:owner": "user@exasol.com",
+   "exa:deputy": "user@exasol.com"
+   "exa:project": "exasol-terraformed"
+   "exa:project.name": "exasol-terraformed"
+   "exa:stage": "development"
+   "Name": "VPC for exasol cluster"
   }
 }
+```
+
+Then you can configure the exasol module like:
+```
+  subnet_id = aws_subnet.exasol_db_vpc.id
+  security_group_id = aws_security_group.exasol_db_security_group.id
 ```
 
 ## Inputs
