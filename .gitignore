@@ -1,3 +1,5 @@
 .terraform/
 terraform.tfplan
 terraform.tfstate
+.idea/
+*.iml
