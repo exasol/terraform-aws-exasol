@@ -1,6 +1,6 @@
-## v0.0.2
+# terraform-aws-exasol 0.0.2, released 2020-01-21
 
-> 2020 JAN 21
+## Summary
 
 * Updates to the latest cloudformation template.
   [#2](https://github.com/exasol/terraform-aws-exasol/issues/2)
@@ -20,14 +20,3 @@
 
 * Adds variable for license file path in order to use with Bring Your Own (BYOL)
   Exasol machine images.
-
-## v0.0.1
-
-> 2019 SEP 09
-
-This is first release version which includes initial setup of project for
-continued improvements.
-
-* Initial working version (with limited input variables)
-* Build script (`./scripts/ci.sh`) with linting and formatting
-* Travis CI based continuous build process

@@ -1,6 +1,6 @@
 # Exasol AWS Terraform Module
 
-<img alt="terraform-aws-exasol logo" src="docs/images/terraform-aws-exasol_128x128.png" style="float:left; padding:0px 10px 10px 10px;"/>
+<img alt="terraform-aws-exasol logo" src="doc/images/terraform-aws-exasol_128x128.png" style="float:left; padding:0px 10px 10px 10px;"/>
 
 [![Build Status][travis-badge]][travis-link]
 [![GitHub Latest Release][gh-release-badge]][gh-release-link]
@@ -190,6 +190,8 @@ The following configuration variables are available.
 ## Contributing
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
+[changelog](doc/changes/changelog.md)
 
 [travis-badge]: https://travis-ci.com/exasol/terraform-aws-exasol.svg?branch=master
 [travis-link]: https://travis-ci.com/exasol/terraform-aws-exasol
