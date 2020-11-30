@@ -36,6 +36,8 @@ resource "aws_cloudformation_stack" "exasol_cluster" {
     CreateEC2Endpoint         = var.create_ec2_endpoint
     OpenPorts                 = var.open_ports
     License                   = var.license == null ? null : file(var.license)
+    OwnerTag                  = var.owner
+    ProjectTag                = var.project
   }
 
   tags = {
