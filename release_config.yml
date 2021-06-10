@@ -4,8 +4,9 @@ release-platforms:
 community-tags:
   - AWS
   - Exasol
+  - Terraform
   - Intrastructure-as-Code
 community-project-name: Terraform AWS Exasol
 community-project-description: |
-  The Terraform AWS Exasol module is a Terraform module that allows you to create an Exasol cluster on AWS using [Terraform](release_config.yml).
+  The Terraform AWS Exasol module is a Terraform module that allows you to create an Exasol cluster on AWS using [Terraform](https://www.terraform.io/).
   By that you can define your Exasol cluster infrastructure as code.
