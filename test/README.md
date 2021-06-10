@@ -1,6 +1,6 @@
 # Tests for terraform-aws-exasol
 
-This directory contains tests for the Exasol terraform module
+This directory contains tests for the Exasol terraform module.
 
 ## Usage:
 
