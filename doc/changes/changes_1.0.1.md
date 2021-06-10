@@ -2,6 +2,12 @@
 
 Code name: Security fix
 
+## Summary
+
+In this release we fixed a security issue. By an unquoted password it was
+possible to execute code on the host running terraform by using a special
+password.
+
 ## Refactoring
 
 * #23: Added integration test
