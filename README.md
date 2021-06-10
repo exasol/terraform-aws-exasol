@@ -187,11 +187,11 @@ The following configuration variables are available.
 |``management_server_ip``           |The Exasol management server public ip address. |
 |``first_datanode_ip``              |The first Exasol datanode public ip address.    |
 
-## Contributing
+## Additional Information
 
-Please see [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
-
-[changelog](doc/changes/changelog.md)
+* [Tests](test/README.md)
+* [Changelog](doc/changes/changelog.md)
+* [Contribution guidelines](CONTRIBUTING.md)
 
 [travis-badge]: https://travis-ci.com/exasol/terraform-aws-exasol.svg?branch=master
 [travis-link]: https://travis-ci.com/exasol/terraform-aws-exasol

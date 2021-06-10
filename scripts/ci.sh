@@ -23,7 +23,7 @@ run_terraform_fmt () {
 }
 
 run_terraform_validate () {
-  terraform validate -var "region=${AWS_REGION}"
+  terraform validate
 }
 
 run_tflint () {
