@@ -11,4 +11,4 @@ This directory contains tests for the Exasol terraform module
   owner = "<YOUR_EMAIL>"
   aws_profile = "<AWS PROFILE TO USE>"
   ```
-* run `go test --timeout 2h`
+* Run `go test --timeout 2h`
