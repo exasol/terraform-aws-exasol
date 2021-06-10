@@ -1,0 +1,9 @@
+terraform.tfstate
+.terraform
+*.lic
+*.info
+terraform.tfstate.backup
+*.tfvars
+*.lock.hcl
+poetry.lock
+go.sum

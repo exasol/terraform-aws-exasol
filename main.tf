@@ -72,11 +72,14 @@ resource "null_resource" "exasol_cluster_wait" {
   provisioner "local-exec" {
     command = <<EOF
     python3 ${path.module}/scripts/exasol_xmlrpc.py \
-      --license-server-address \
-      ${data.aws_instance.management_server.public_ip} \
+      --license-server-address "$IP"\
       --username admin \
-      --password ${var.admin_user_password}
+      --password "$ADMIN_PASS"
   EOF
+    environment = {
+      IP = data.aws_instance.management_server.public_ip
+      ADMIN_PASS = var.admin_user_password
+    }
   }
 }
 
