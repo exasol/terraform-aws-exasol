@@ -77,7 +77,7 @@ resource "null_resource" "exasol_cluster_wait" {
       --password "$ADMIN_PASS"
   EOF
     environment = {
-      IP = data.aws_instance.management_server.public_ip
+      IP         = data.aws_instance.management_server.public_ip
       ADMIN_PASS = var.admin_user_password
     }
   }
