@@ -193,7 +193,7 @@ The following configuration variables are available.
 * [Changelog](doc/changes/changelog.md)
 * [Contribution guidelines](CONTRIBUTING.md)
 
-[travis-badge]: https://travis-ci.com/exasol/terraform-aws-exasol.svg?branch=master
+[travis-badge]: https://travis-ci.com/exasol/terraform-aws-exasol.svg?branch=main
 [travis-link]: https://travis-ci.com/exasol/terraform-aws-exasol
 [gh-release-badge]: https://img.shields.io/github/tag/exasol/terraform-aws-exasol.svg?label=latest
 [gh-release-link]: https://github.com/exasol/terraform-aws-exasol/releases/latest
