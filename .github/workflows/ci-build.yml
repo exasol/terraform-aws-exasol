@@ -9,6 +9,10 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        terraform_version: [0.12.x, 0.13.x, 0.14.x, 0.15.x, 1.0.11, latest]
+
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
@@ -28,11 +32,9 @@ jobs:
           shellcheck --version
 
       - name: Install terraform
-        run: |
-          export TERRAFORM_VERSION=$(curl -s https://checkpoint-api.hashicorp.com/v1/check/terraform | jq -r -M '.current_version')
-          curl --silent --output terraform.zip "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
-          unzip terraform.zip; rm -f terraform.zip; chmod +x terraform; mv terraform ${HOME}/bin/
-          terraform -v
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ matrix.terraform_version }}
 
       - name: Install tflint
         run: |
