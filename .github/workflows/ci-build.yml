@@ -3,12 +3,15 @@ name: CI Build
 on:
   - push
 
+env:
+  TFLINT_VERSION: "v0.33.1"
+
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        terraform_version: [0.12.x, 0.13.x, 0.14.x, 0.15.x, 1.0.11, latest]
+        terraform_version: [0.12.31, 0.13.7, 0.14.11, 0.15.5, 1.0.11]
 
     steps:
       - name: Checkout the repository
@@ -30,20 +33,21 @@ jobs:
           shellcheck --version
 
       - name: Install terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: ${{ matrix.terraform_version }}
+        run: |
+          export TERRAFORM_VERSION=$(curl -s https://checkpoint-api.hashicorp.com/v1/check/terraform | jq -r -M '.current_version')
+          curl --silent --output terraform.zip "https://releases.hashicorp.com/terraform/${{ matrix.terraform_version }}/terraform_${{ matrix.terraform_version }}_linux_amd64.zip"
+          unzip terraform.zip
+          rm -f terraform.zip
+          chmod +x terraform
+          mv terraform ${HOME}/bin/
 
       - name: Install tflint
-        uses: terraform-linters/setup-tflint@v1
-        with:
-          tflint_version: latest
-
-      - name: Cache tflint plugin directory
-        uses: actions/cache@v2
-        with:
-          path: ~/.tflint.d/plugins
-          key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+        run: |
+          wget -O tflint.zip "https://github.com/wata727/tflint/releases/download/${{ env.TFLINT_VERSION }}/tflint_linux_amd64.zip"
+          unzip tflint.zip
+          install tflint ${HOME}/bin/
+          rm -rf tflint*
+          tflint -v
 
       - name: Run CI Script
         run: ./scripts/ci.sh
