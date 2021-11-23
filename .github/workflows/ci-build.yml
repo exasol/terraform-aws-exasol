@@ -1,0 +1,35 @@
+name: CI Build
+
+on:
+  - push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Prepare bin directory
+        run: mkdir -p ${HOME}/bin; export PATH=${PATH}:${HOME}/bin
+
+      - name: Install shellcheck package
+        run: |
+          wget "https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz"
+          tar -xvf shellcheck-stable.linux.x86_64.tar.xz
+          cp shellcheck-stable/shellcheck ${HOME}/bin/
+          shellcheck --version
+
+      - name: Install Terraform and TFLint packages
+        run: |
+          export TERRAFORM_VERSION=$(curl -s https://checkpoint-api.hashicorp.com/v1/check/terraform | jq -r -M '.current_version')
+          curl --silent --output terraform.zip "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
+          unzip terraform.zip; rm -f terraform.zip; chmod +x terraform; mv terraform ${HOME}/bin/
+          wget -O tflint.zip "https://github.com/wata727/tflint/releases/download/v0.13.4/tflint_linux_amd64.zip"
+          unzip tflint.zip; rm -f tflint.zip; chmod +x tflint; mv tflint ${HOME}/bin/
+          terraform -v
+
+      - name: Run CI Script
+        run: ./scripts/ci.sh
