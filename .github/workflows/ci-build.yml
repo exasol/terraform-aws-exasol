@@ -3,9 +3,6 @@ name: CI Build
 on:
   - push
 
-env:
-  TFLINT_VERSION: "v0.33.1"
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -37,21 +34,15 @@ jobs:
           terraform_version: ${{ matrix.terraform_version }}
 
       - name: Install tflint
-        run: |
-          wget -O tflint.zip "https://github.com/wata727/tflint/releases/download/${{ env.TFLINT_VERSION }}/tflint_linux_amd64.zip"
-          unzip tflint.zip
-          mkdir -p ~/tflint/bin/
-          install tflint ~/tflint/bin/
-          echo '~/tflint/bin/' >> $GITHUB_PATH
-          tflint -v
+        uses: terraform-linters/setup-tflint@v1
+        with:
+          tflint_version: latest
 
-      - name: Cache tflint
+      - name: Cache tflint plugin directory
         uses: actions/cache@v2
         with:
-          path: ~/tflint/bin/
-          key: ${{ runner.os }}-tflint-${{ env.TFLINT_VERSION }}
-          restore-keys: |
-            ${{ runner.os }}-tflint-
+          path: ~/.tflint.d/plugins
+          key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
 
       - name: Run CI Script
         run: ./scripts/ci.sh
