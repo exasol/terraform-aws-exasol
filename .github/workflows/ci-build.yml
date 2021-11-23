@@ -24,6 +24,7 @@ jobs:
       - name: Install shellcheck
         run: |
           wget "https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz"
+          echo "754516e4e6927b1b83417dcbc4fffe43acfc12716f8d789ed0952ad4d976d0bc  shellcheck-stable.linux.x86_64.tar.xz" | sha256sum -c
           tar -xvf shellcheck-stable.linux.x86_64.tar.xz
           cp shellcheck-stable/shellcheck ${HOME}/bin/
           rm -rf shellcheck-stable*

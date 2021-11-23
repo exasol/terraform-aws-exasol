@@ -1,4 +1,4 @@
-# terraform-aws-exasol 1.0.2, released 2021-11-23
+# terraform-aws-exasol 1.0.2, released 2021-11-24
 
 Code name: Migrated to Github Actions
 
