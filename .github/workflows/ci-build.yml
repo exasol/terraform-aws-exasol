@@ -1,0 +1,59 @@
+name: CI Build
+
+on:
+  - push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - terraform_version: 0.12.31
+            sha256sum: "e5eeba803bc7d8d0cae7ef04ba7c3541c0abd8f9e934a5e3297bf738b31c5c6d"
+          - terraform_version: 1.0.11
+            sha256sum: "eeb46091a42dc303c3a3c300640c7774ab25cbee5083dafa5fd83b54c8aca664"
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Prepare bin directory
+        run: |
+          mkdir -p ${HOME}/bin
+          echo "${HOME}/bin/" >> $GITHUB_PATH
+
+      - name: Install shellcheck
+        run: |
+          wget -O shellcheck-stable.tar.xz "https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz"
+          echo "754516e4e6927b1b83417dcbc4fffe43acfc12716f8d789ed0952ad4d976d0bc  shellcheck-stable.tar.xz" | sha256sum -c
+          tar -xvf shellcheck-stable.tar.xz
+          cp shellcheck-stable/shellcheck ${HOME}/bin/
+          chmod +x ${HOME}/bin/shellcheck
+          rm -rf shellcheck-stable*
+          shellcheck --version
+
+      - name: Install terraform
+        run: |
+          wget -O terraform.zip "https://releases.hashicorp.com/terraform/${{ matrix.terraform_version }}/terraform_${{ matrix.terraform_version }}_linux_amd64.zip"
+          echo "${{ matrix.sha256sum }}  terraform.zip" | sha256sum -c
+          unzip terraform.zip
+          rm -f terraform.zip
+          chmod +x terraform
+          mv terraform ${HOME}/bin/
+          terraform -v
+
+      - name: Install tflint
+        run: |
+          wget -O tflint.zip "https://github.com/wata727/tflint/releases/download/v0.33.1/tflint_linux_amd64.zip"
+          echo "312435bc332df0bd986346adb6819bac7b3918e8d3b2ada6a54cf6899753ad48  tflint.zip" | sha256sum -c
+          unzip tflint.zip
+          install tflint ${HOME}/bin/
+          chmod +x ${HOME}/bin/tflint
+          rm -rf tflint*
+          tflint -v
+
+      - name: Run CI Script
+        run: ./scripts/ci.sh
