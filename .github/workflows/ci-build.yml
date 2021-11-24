@@ -11,10 +11,6 @@ jobs:
         include:
           - terraform_version: 0.12.31
             sha256sum: "e5eeba803bc7d8d0cae7ef04ba7c3541c0abd8f9e934a5e3297bf738b31c5c6d"
-          - terraform_version: 0.13.7
-            sha256sum: "4a52886e019b4fdad2439da5ff43388bbcc6cce9784fde32c53dcd0e28ca9957"
-          - terraform_version: 0.14.11
-            sha256sum: "171ef5a4691b6f86eab524feaf9a52d5221c875478bd63dd7e55fef3939f7fd4"
           - terraform_version: 1.0.11
             sha256sum: "eeb46091a42dc303c3a3c300640c7774ab25cbee5083dafa5fd83b54c8aca664"
 
@@ -47,6 +43,7 @@ jobs:
           rm -f terraform.zip
           chmod +x terraform
           mv terraform ${HOME}/bin/
+          terraform -v
 
       - name: Install tflint
         run: |
