@@ -5,6 +5,7 @@ on:
 
 jobs:
   build:
+    name: Building with Terraform version ${{ matrix.terraform_version }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
