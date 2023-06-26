@@ -1,9 +1,10 @@
 package test
 
 import (
+	"database/sql"
 	"testing"
 
-	"github.com/grantstreetgroup/go-exasol-client"
+	"github.com/exasol/exasol-driver-go"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/sethvargo/go-password/password"
 )
@@ -37,19 +38,18 @@ func getRandomPassword() string {
 }
 
 func assertCanConnect(t *testing.T, ip string, sysPassword string) {
-	conf := exasol.ConnConf{
-		Host:     ip,
-		Port:     8563,
-		Username: "sys",
-		Password: sysPassword,
-	}
-	conn, err := exasol.Connect(conf)
+	config := exasol.NewConfig("sys", sysPassword).
+		Port(8563).
+		Host(ip).
+		ValidateServerCertificate(true)
+
+	conn, err := sql.Open("exasol", config.String())
 	if err != nil {
 		t.Error("Failed to connect to the exasol database: " + err.Error())
 	}
-	defer conn.Disconnect()
+	defer conn.Close()
 
-	_, err = conn.Execute("SELECT * FROM DUAL")
+	_, err = conn.Exec("SELECT * FROM DUAL")
 	if err != nil {
 		t.Error("Failed to run query on the exasol database: " + err.Error())
 	}
