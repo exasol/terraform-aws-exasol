@@ -3,5 +3,5 @@ terraform.tfplan
 terraform.tfstate
 .idea/
 *.iml
-.terraform.lock.hcl
 venv/
+.DS_Store
