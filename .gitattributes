@@ -1,0 +1,4 @@
+*.sh text eol=lf
+
+./test/simple_exasol_setup/.terraform.lock.hcl  linguist-generated=true
+./test/go.sum                                   linguist-generated=true
