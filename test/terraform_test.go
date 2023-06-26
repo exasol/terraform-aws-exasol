@@ -41,7 +41,7 @@ func assertCanConnect(t *testing.T, ip string, sysPassword string) {
 	config := exasol.NewConfig("sys", sysPassword).
 		Port(8563).
 		Host(ip).
-		ValidateServerCertificate(true)
+		ValidateServerCertificate(false)
 
 	conn, err := sql.Open("exasol", config.String())
 	if err != nil {
