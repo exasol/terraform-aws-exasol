@@ -15,7 +15,8 @@ resource "aws_cloudformation_stack" "exasol_cluster" {
   capabilities = [
   "CAPABILITY_IAM"]
   on_failure   = "DELETE"
-  template_url = "https://exasol-cf-templates.s3.eu-central-1.amazonaws.com/cloudformation_template_v0.0.3.yml"
+  template_url = "https://exasol-cf-templates.s3.eu-central-1.amazonaws.com/cloudformation_template_v1.0.3.yml"
+  #template_url = "https://cf-templates-108gz6bgtk9s-eu-central-1.s3.eu-central-1.amazonaws.com/cloudformation_template_v1.0.3.yml"
 
   parameters = {
     DBSystemName              = var.database_name
