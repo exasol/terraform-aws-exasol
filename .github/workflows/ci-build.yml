@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        terraform_version: ["0.12.31", "1.0.11"]
+        terraform_version: ["1.5.1"]
 
     steps:
       - name: Checkout the repository
