@@ -8,24 +8,24 @@ import (
 	"github.com/sethvargo/go-password/password"
 )
 
-//run with go test --timeout 2h
+// run with go test --timeout 2h
 func TestExasolTerraformModule(t *testing.T) {
 	t.Parallel()
-	sys_password := getRandomPassword()
+	sysPassword := getRandomPassword()
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "./simple_exasol_setup/",
 
 		Vars: map[string]interface{}{
 			"exasol_admin_password": getRandomPassword(),
-			"exasol_sys_password":   sys_password,
+			"exasol_sys_password":   sysPassword,
 		},
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
 
-	datanode_ip := terraform.Output(t, terraformOptions, "datanode_ip")
-	assertCanConnect(t, datanode_ip, sys_password)
+	datanodeIp := terraform.Output(t, terraformOptions, "datanode_ip")
+	assertCanConnect(t, datanodeIp, sysPassword)
 }
 
 func getRandomPassword() string {
