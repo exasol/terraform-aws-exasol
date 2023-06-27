@@ -188,8 +188,8 @@ The following configuration variables are available.
 
 ## Additional Information
 
-- [Tests](test/README.md)
 - [Changelog](doc/changes/changelog.md)
+- [Developer Guide](doc/developers_guide/developers_guide.md)
 - [Contribution guidelines](CONTRIBUTING.md)
 
 [gh-release-badge]: https://img.shields.io/github/tag/exasol/terraform-aws-exasol.svg?label=latest
