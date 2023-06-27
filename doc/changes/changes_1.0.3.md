@@ -1,4 +1,4 @@
-# terraform-aws-exasol 1.0.3, released 2022-06-27
+# terraform-aws-exasol 1.0.3, released 2023-06-27
 
 Code name: Fix deployment
 
