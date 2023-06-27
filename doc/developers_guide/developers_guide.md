@@ -1,5 +1,15 @@
 # Developer Guide
 
+## CI Tests
+
+The CI build runs smoke tests and static code analysis. This requires Terraform and [tflint](https://github.com/terraform-linters/tflint) to be installed.
+
+Run the build with the following command:
+
+```sh
+./scripts/ci.sh
+```
+
 ## System Tests
 
 System tests for deploying the Exasol Terraform module are located in the `test` directory.
