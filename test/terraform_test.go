@@ -1,31 +1,32 @@
 package test
 
 import (
+	"database/sql"
 	"testing"
 
-	"github.com/grantstreetgroup/go-exasol-client"
+	"github.com/exasol/exasol-driver-go"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/sethvargo/go-password/password"
 )
 
-//run with go test --timeout 2h
+// run with go test --timeout 2h
 func TestExasolTerraformModule(t *testing.T) {
 	t.Parallel()
-	sys_password := getRandomPassword()
+	sysPassword := getRandomPassword()
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "./simple_exasol_setup/",
 
 		Vars: map[string]interface{}{
 			"exasol_admin_password": getRandomPassword(),
-			"exasol_sys_password":   sys_password,
+			"exasol_sys_password":   sysPassword,
 		},
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
 	terraform.InitAndApply(t, terraformOptions)
 
-	datanode_ip := terraform.Output(t, terraformOptions, "datanode_ip")
-	assertCanConnect(t, datanode_ip, sys_password)
+	datanodeIp := terraform.Output(t, terraformOptions, "datanode_ip")
+	assertCanConnect(t, datanodeIp, sysPassword)
 }
 
 func getRandomPassword() string {
@@ -37,19 +38,18 @@ func getRandomPassword() string {
 }
 
 func assertCanConnect(t *testing.T, ip string, sysPassword string) {
-	conf := exasol.ConnConf{
-		Host:     ip,
-		Port:     8563,
-		Username: "sys",
-		Password: sysPassword,
-	}
-	conn, err := exasol.Connect(conf)
+	config := exasol.NewConfig("sys", sysPassword).
+		Port(8563).
+		Host(ip).
+		ValidateServerCertificate(false)
+
+	conn, err := sql.Open("exasol", config.String())
 	if err != nil {
 		t.Error("Failed to connect to the exasol database: " + err.Error())
 	}
-	defer conn.Disconnect()
+	defer conn.Close()
 
-	_, err = conn.Execute("SELECT * FROM DUAL")
+	_, err = conn.Exec("SELECT * FROM DUAL")
 	if err != nil {
 		t.Error("Failed to run query on the exasol database: " + err.Error())
 	}

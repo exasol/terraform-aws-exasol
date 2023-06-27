@@ -10,7 +10,7 @@ A [Terraform](https://www.terraform.io) module to create an [Exasol](https://www
 
 ## Prerequisites
 
-- [terraform][terraform-install] version `>= 0.12`
+- [terraform][terraform-install] version `>= 1.5.1`
 - [aws-cli profile][aws-cli-profile] with administrative access
 - [python3][python3-install]
 
@@ -188,14 +188,13 @@ The following configuration variables are available.
 
 ## Additional Information
 
-- [Tests](test/README.md)
 - [Changelog](doc/changes/changelog.md)
+- [Developer Guide](doc/developers_guide/developers_guide.md)
 - [Contribution guidelines](CONTRIBUTING.md)
 
 [gh-release-badge]: https://img.shields.io/github/tag/exasol/terraform-aws-exasol.svg?label=latest
 [gh-release-link]: https://github.com/exasol/terraform-aws-exasol/releases/latest
-[terraform-version]: https://img.shields.io/badge/tf-%3E%3D0.12.0-blue.svg
+[terraform-version]: https://img.shields.io/badge/tf-%3E=1.5.1-blue.svg
 [terraform-install]: https://www.terraform.io/downloads.html
-[aws-cli]: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html
 [aws-cli-profile]: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html
 [python3-install]: https://www.python.org/downloads/

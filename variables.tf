@@ -44,7 +44,7 @@ variable "subnet_id" {
 }
 
 variable "security_group_id" {
-  description = "A security group id to attach to the intances."
+  description = "A security group id to attach to the instances."
   type        = string
 }
 

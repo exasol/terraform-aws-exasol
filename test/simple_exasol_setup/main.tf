@@ -112,7 +112,7 @@ resource "aws_internet_gateway" "gw" {
 
 resource "random_password" "exasol_admin_password" {
   length = 20
-  number = true
+  numeric = true
   # with some special chars login does not work
   special = false
   min_upper = 1
@@ -124,7 +124,7 @@ module "exasol" {
   source = "../../"
   cluster_name = "${local.project_tag}-exasol-cluster"
   database_name = "exadb"
-  ami_image_name = "Exasol-R7.0.8-BYOL"
+  ami_image_name = "Exasol-R7.1.20-BYOL"
   sys_user_password = var.exasol_sys_password
   admin_user_password = var.exasol_admin_password
   management_server_instance_type = "m5.large"

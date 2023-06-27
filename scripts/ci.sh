@@ -27,7 +27,7 @@ run_terraform_validate () {
 }
 
 run_tflint () {
-  tflint .
+  tflint --chdir=.
 }
 
 run_clean_worktree_check () {
