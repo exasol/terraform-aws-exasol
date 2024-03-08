@@ -6,6 +6,8 @@ Code name: Fix deployment
 
 This release updates the NodeJS version for Lambdas used by the CloudFormation template during deployment to 20.x
 
+Starting with this version terraform-aws-exasol is tested with Terraform 1.5.7. We recommend using the same version.
+
 ## Bug Fixes
 
 - #37: Fixed nodejs version in CF template
