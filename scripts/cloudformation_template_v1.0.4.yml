@@ -1579,7 +1579,7 @@ Resources:
             - 'return failed({Error: ''In-place updates not supported.''});'
             - '}'
             - '};'
-      Runtime: nodejs20.x
+      Runtime: nodejs16.x
       Timeout: '300'
   MasterKey:
     Type: AWS::KMS::Key
@@ -1664,7 +1664,7 @@ Resources:
             - '      });'
             - '  });'
             - '};'
-      Runtime: nodejs20.x
+      Runtime: nodejs16.x
       Timeout: '300'
   EncryptCredentials:
     Type: Custom::EncryptCredentials
@@ -1716,7 +1716,7 @@ Resources:
             - '       }'
             - '   });'
             - '};'
-      Runtime: nodejs20.x
+      Runtime: nodejs16.x
       Timeout: '300'
   GetSubnetCidr:
     Type: Custom::GetSubnetCidr
@@ -1757,7 +1757,7 @@ Resources:
               DefaultGateWay, LicenseServerIp: LicenseServerIp, FirstDataNodeIp: FirstDataNodeIp
               });'
             - '};'
-      Runtime: nodejs20.x
+      Runtime: nodejs16.x
       Timeout: '300'
   IpCalc:
     Type: Custom::IpCalc
