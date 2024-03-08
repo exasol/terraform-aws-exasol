@@ -25,5 +25,10 @@ jobs:
         with:
           tflint_version: v0.50.3
 
+      - name: Log Terraform version
+        run: |
+          terraform version
+          tflint --version
+
       - name: Run CI Script
         run: ./scripts/ci.sh
