@@ -1,5 +1,11 @@
 # Developer Guide
 
+## Updating CloudFormation Templates
+
+1. Make a copy of the latest template in `scripts` for the new version
+2. Update the new template
+3. Upload the template to S3 bucket `exasol-cf-templates` in region `eu-central-1` (prod account)
+
 ## CI Tests
 
 The CI build runs smoke tests and static code analysis. This requires Terraform and [tflint](https://github.com/terraform-linters/tflint) to be installed.
