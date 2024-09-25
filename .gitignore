@@ -5,4 +5,3 @@ terraform.tfstate
 *.iml
 venv/
 .DS_Store
-.terraform.lock.hcl

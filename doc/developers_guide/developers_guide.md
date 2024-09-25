@@ -4,7 +4,10 @@
 
 1. Make a copy of the latest template in `scripts` for the new version
 2. Update the new template
-3. Upload the template to S3 bucket `exasol-cf-templates` in region `eu-central-1` (prod account)
+3. Upload the template to S3 bucket `exasol-cf-templates` in region `eu-central-1` (prod account), e.g.:
+  ```sh
+  aws s3 cp scripts/cloudformation_template_v1.1.0.yml s3://exasol-cf-templates/cloudformation_template_v1.1.0.yml
+  ```
 
 ## CI Tests
 
@@ -25,7 +28,7 @@ System tests for deploying the Exasol Terraform module are located in the `test`
 * Install Terraform and Go
 * Get an Exasol license and store it as `test/simple_exasol_setup/exasolution.lic`
 * Create the file `test/simple_exasol_setup/terraform.tfvars` and fill in:
-  ```
+  ```properties
   owner = "<YOUR_EMAIL>"
   aws_profile = "<AWS PROFILE TO USE>"
   ```
