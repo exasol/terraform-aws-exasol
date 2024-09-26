@@ -1391,7 +1391,8 @@ Resources:
           - ''
           - - '''use strict'';'
             - const response = require('cfn-response');
-            - const AWS = require('aws-sdk');
+            - const {EC2} = require('@aws-sdk/client-ec2');
+            - const ec2 = new EC2();
             - const regexIP = /\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/;
             - function toInt(ip) {return ip.split('.').map((octet, index, array) =>
               {return parseInt(octet) * Math.pow(256, (array.length - index - 1));}).reduce((prev,
@@ -1406,7 +1407,6 @@ Resources:
             - function failed(e) {
             - return response.send(event, context, response.FAILED, e, physicalId);
             - '}'
-            - let ec2 = new AWS.EC2();
             - let numberOfInstances = parseInt(event.ResourceProperties.MaxCount)
               + parseInt(
             - !Ref 'StandbyNode'
@@ -1489,7 +1489,7 @@ Resources:
             - 'return failed({Error: ''In-place updates not supported.''});'
             - '}'
             - '};'
-      Runtime: nodejs16.x
+      Runtime: nodejs20.x
       Timeout: '300'
   MasterKey:
     Type: AWS::KMS::Key
@@ -1555,8 +1555,8 @@ Resources:
           - ''
           - - '''use strict'';'
             - const response = require('cfn-response');
-            - const AWS = require('aws-sdk');
-            - const kms = new AWS.KMS();
+            - const {KMS} = require('@aws-sdk/client-kms');
+            - const kms = new KMS();
             - exports.handler = function(event, context) {
             - '   kms.encrypt({KeyId:'''
             - !Ref 'MasterKey'
@@ -1574,7 +1574,7 @@ Resources:
             - '      });'
             - '  });'
             - '};'
-      Runtime: nodejs16.x
+      Runtime: nodejs20.x
       Timeout: '300'
   EncryptCredentials:
     Type: Custom::EncryptCredentials
@@ -1597,8 +1597,8 @@ Resources:
           - ''
           - - '''use strict'';'
             - const response = require('cfn-response');
-            - const AWS = require('aws-sdk');
-            - const ec2 = new AWS.EC2();
+            - const {EC2} = require('@aws-sdk/client-ec2');
+            - const ec2 = new EC2();
             - exports.handler = function(event, context) {
             - '   let params = {'
             - '       DryRun: false,'
@@ -1626,7 +1626,7 @@ Resources:
             - '       }'
             - '   });'
             - '};'
-      Runtime: nodejs16.x
+      Runtime: nodejs20.x
       Timeout: '300'
   GetSubnetCidr:
     Type: Custom::GetSubnetCidr
@@ -1667,7 +1667,7 @@ Resources:
               DefaultGateWay, LicenseServerIp: LicenseServerIp, FirstDataNodeIp: FirstDataNodeIp
               });'
             - '};'
-      Runtime: nodejs16.x
+      Runtime: nodejs20.x
       Timeout: '300'
   IpCalc:
     Type: Custom::IpCalc
