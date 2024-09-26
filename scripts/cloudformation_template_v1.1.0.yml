@@ -1440,7 +1440,7 @@ Resources:
             - function createPromise(tries, ipaddress) {
             - return new Promise(function cb(resolve, reject) {
             - event.ResourceProperties.NetworkInterfaces[0].PrivateIpAddress = ipaddress;
-            - ec2.runInstances(event.ResourceProperties).promise().then((data) =>
+            - ec2.runInstances(event.ResourceProperties).then((data) =>
               {
             - instanceIds.push(data['Instances'][0]['InstanceId']);
             - 'ec2.describeVolumes({Filters: [{Name: ''attachment.instance-id'',  Values:
@@ -1448,7 +1448,7 @@ Resources:
             - let promisesvolumes = [];
             - data1['Volumes'].forEach(y => {
             - 'promisesvolumes.push(ec2.createTags({Resources: [ y[''VolumeId'']],
-              Tags: event.ResourceProperties.TagSpecifications[0].Tags}).promise());'
+              Tags: event.ResourceProperties.TagSpecifications[0].Tags}));'
             - '});'
             - Promise.all(promisesvolumes).then(_ => {
             - if (instanceIds.length == numberOfInstances) {
@@ -1481,8 +1481,8 @@ Resources:
             - return success({});
             - '}'
             - 'let deleteParams = {InstanceIds: physicalId.split('':'')};'
-            - ec2.terminateInstances(deleteParams).promise().then((data)=>
-            - ec2.waitFor('instanceTerminated', deleteParams).promise()
+            - ec2.terminateInstances(deleteParams).then((data)=>
+            - ec2.waitFor('instanceTerminated', deleteParams)
             - ).then((data) => success({})
             - ').catch((e) => failed({Error: e}));'
             - '} else {'
