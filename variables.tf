@@ -12,7 +12,7 @@ variable "database_name" {
 }
 
 variable "ami_image_name" {
-  description = "An Exasol AMI image name. For example, 'R6.1.5-PAYG' or 'R6.2.1-BYOL'."
+  description = "An Exasol AMI image name. For example, 'Exasol-R7.1.26-PAYG' or 'Exasol-R7.1.26-BYOL'."
   type        = string
 }
 
@@ -148,4 +148,3 @@ variable "waited_on" {
   description = "A variable that this module can wait on."
   type        = string
 }
-

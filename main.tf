@@ -1,19 +1,16 @@
 data "aws_ami" "exasol" {
   most_recent = true
-  owners = [
-  var.ami_image_owner]
+  owners = [var.ami_image_owner]
 
   filter {
     name = "name"
-    values = [
-    "*${var.ami_image_name}-*"]
+    values = ["*${var.ami_image_name}-*"]
   }
 }
 
 resource "aws_cloudformation_stack" "exasol_cluster" {
   name = var.cluster_name
-  capabilities = [
-  "CAPABILITY_IAM"]
+  capabilities = ["CAPABILITY_IAM"]
   on_failure   = "DELETE"
   template_url = "https://exasol-cf-templates.s3.eu-central-1.amazonaws.com/cloudformation_template_v1.1.0.yml"
   parameters = {
@@ -61,8 +58,7 @@ data "aws_instance" "management_server" {
 
 resource "null_resource" "exasol_cluster_wait" {
   count = var.public_ip ? 1 : 0
-  depends_on = [
-  aws_cloudformation_stack.exasol_cluster]
+  depends_on = [aws_cloudformation_stack.exasol_cluster]
 
   triggers = {
     always = uuid()
@@ -83,6 +79,5 @@ resource "null_resource" "exasol_cluster_wait" {
 }
 
 resource "null_resource" "exasol_waited_on" {
-  depends_on = [
-  null_resource.exasol_cluster_wait]
+  depends_on = [null_resource.exasol_cluster_wait]
 }

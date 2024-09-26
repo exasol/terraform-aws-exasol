@@ -8,6 +8,7 @@
   ```sh
   aws s3 cp scripts/cloudformation_template_v1.1.0.yml s3://exasol-cf-templates/cloudformation_template_v1.1.0.yml
   ```
+4. Enable public read access for the uploaded file
 
 ## CI Tests
 
