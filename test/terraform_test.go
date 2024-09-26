@@ -38,19 +38,25 @@ func getRandomPassword() string {
 }
 
 func assertCanConnect(t *testing.T, ip string, sysPassword string) {
+	port := 8563
+	t.Logf("Checking connection to %q:%d...", ip, port)
 	config := exasol.NewConfig("sys", sysPassword).
-		Port(8563).
+		Port(port).
 		Host(ip).
 		ValidateServerCertificate(false)
 
 	conn, err := sql.Open("exasol", config.String())
 	if err != nil {
 		t.Error("Failed to connect to the exasol database: " + err.Error())
+	} else {
+		t.Logf("Connection to %q:%d successful", ip, port)
 	}
 	defer conn.Close()
 
 	_, err = conn.Exec("SELECT * FROM DUAL")
 	if err != nil {
 		t.Error("Failed to run query on the exasol database: " + err.Error())
+	} else {
+		t.Log("SQL query succeeded")
 	}
 }
