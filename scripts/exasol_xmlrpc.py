@@ -19,17 +19,17 @@ WAIT_DURATION: datetime.timedelta = datetime.timedelta(hours=1)
 WAIT_SLEEP_TIME: datetime.timedelta = datetime.timedelta(seconds=15)
 
 
-def has_started(server: ServerProxy) -> bool:
+def has_started(client: ServerProxy) -> bool:
     started = True
     try:
-        server.listMethods()
+        client.listMethods()
     except Exception as ex:
         logger.info(f"Server not yet started: {ex}")
         started = False
     return started
 
 
-def wait(server: ServerProxy) -> None:
+def wait(client: ServerProxy) -> None:
     start = datetime.datetime.now()
 
     def current_delta():
@@ -43,7 +43,7 @@ def wait(server: ServerProxy) -> None:
             f"Waiting for {WAIT_DURATION} (remaining: {remaining()}) with sleep time {WAIT_SLEEP_TIME}s"
         )
 
-        if has_started(server):
+        if has_started(client):
             logger.info(f"Server started after {current_delta()}")
             return
 
@@ -55,15 +55,15 @@ def wait(server: ServerProxy) -> None:
         )
 
 
-def create_server(address, username, password) -> ServerProxy:
+def create_client(address, username, password) -> ServerProxy:
     url = f"https://{username}:{password}@{address}/cluster1"
     logger.info(f"Connecting to {username} @ {address}")
     return xmlrpc(url, context=ssl._create_unverified_context())
 
 
-def check_db_started(server: ServerProxy):
+def check_db_started(client: ServerProxy):
     logger.info("Checking if 'exadb' database is running")
-    running = server.db_exadb.runningDatabase()
+    running = client.db_exadb.runningDatabase()
     if running:
         logger.info(f"Exasol database is running: {running}")
     else:
@@ -80,11 +80,11 @@ def run():
     logger.info("The following arguments are provided: '%s'" % args)
 
     try:
-        server = create_server(
+        client = create_client(
             args.license_server_address, args.username, args.password
         )
-        wait(server)
-        check_db_started(server)
+        wait(client)
+        check_db_started(client)
     except Exception as ex:
         logger.info('Exception "%s" was thrown!' % str(ex))
         return 1
