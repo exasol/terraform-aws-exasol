@@ -4,7 +4,7 @@
 
 1. Make a copy of the latest template in `scripts` for the new version
 2. Update the new template
-3. Upload the template to S3 bucket `exasol-cf-templates` in region `eu-central-1` (prod account) and re-enable public read access:
+3. Upload the template to S3 bucket `exasol-cf-templates` in region `eu-central-1` (prod account) and enable public read access:
   ```sh
   version=v2.0.0
   aws s3 cp scripts/cloudformation_template_${version}.yml s3://exasol-cf-templates/cloudformation_template_${version}.yml
