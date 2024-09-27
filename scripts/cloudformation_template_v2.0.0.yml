@@ -1466,7 +1466,7 @@ Resources:
             - 'const deleteParams = {InstanceIds: physicalId.split('':'')};'
             - ec2.terminateInstances(deleteParams).then((data)=> {
             - console.log('Waiting for instances to terminate...');
-            - return waitUntilInstanceTerminated({client: ec2}, deleteParams);
+            - 'return waitUntilInstanceTerminated({client: ec2}, deleteParams);'
             - '}).then((data) => { console.log(''Instances terminated successfully''); return success({});}'
             - ').catch((e) => { console.log(''Terminating failed: '' + e); return failed({Error: ''Error when terminating instances: '' + e}); } );'
             - '} else {'
