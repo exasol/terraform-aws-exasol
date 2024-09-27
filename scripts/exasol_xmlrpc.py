@@ -63,7 +63,10 @@ def create_server(address, username, password) -> ServerProxy:
 
 def check_db_started(server: ServerProxy):
     logger.info("Checking if 'exadb' database is running")
-    if not server.db_exadb.runningDatabase():
+    running = server.db_exadb.runningDatabase()
+    if running:
+        logger.info(f"Exasol database is running: {running}")
+    else:
         raise RuntimeError("Exasol database is not started!")
 
 

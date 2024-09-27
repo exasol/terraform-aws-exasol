@@ -12,7 +12,7 @@ variable "database_name" {
 }
 
 variable "ami_image_name" {
-  description = "An Exasol AMI image name. For example, 'Exasol-R7.1.26-PAYG' or 'Exasol-R7.1.26-BYOL'."
+  description = "An Exasol AMI image name. For example, 'Exasol-R7.1.26-PAYG'."
   type        = string
 }
 
