@@ -139,7 +139,6 @@ module "exasol" {
   project_name = var.project
   owner = var.owner
   environment = "dev"
-  license = "./exasolution.lic"
 }
 
 output "datanode_ip" {

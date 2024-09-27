@@ -91,10 +91,6 @@ Metadata:
           - DBEBSEncryption
           - BlockDeviceVolumeSize
           - BlockDeviceCount
-      - Label:
-          default: License
-        Parameters:
-          - License
     ParameterLabels:
       ProjectTag:
         default: exa:project
@@ -114,8 +110,6 @@ Metadata:
         default: ADMIN User Password
       KeyName:
         default: AWS Key Pair
-      License:
-        default: License (OPTIONAL)
       PublicIP:
         default: Public IPs
       CreateS3Bucket:
@@ -350,11 +344,6 @@ Parameters:
     Description: ''
     Type: AWS::EC2::KeyPair::KeyName
     MinLength: '1'
-  License:
-    Default: ''
-    Description: In case of a BYOL image, an already aquired license can be pasted
-      here
-    Type: String
   SecurityGroupAccess:
     Default: '0.0.0.0/0'
     AllowedPattern: \d{1,3}([.]\d{1,3}){3}/\d{1,2}
@@ -1266,12 +1255,6 @@ Resources:
         Fn::Base64: !Join
           - ''
           - - "mkdir -p /var/lib/exawolke/\n"
-            - LICENSE='
-            - !Ref 'License'
-            - "'\n"
-            - "if ! [[ -z ${LICENSE//} ]]; then mv /usr/opt/EXAWolke/etc/exasolution.lic\
-              \ /usr/opt/EXAWolke/etc/exasolution.lic_backup; echo $LICENSE > /usr/opt/EXAWolke/etc/exasolution.lic;\
-              \ fi\n"
             - FIRSTDATANODEIP='
             - !GetAtt 'IpCalc.FirstDataNodeIp'
             - "'\n"
@@ -1391,7 +1374,7 @@ Resources:
           - ''
           - - '''use strict'';'
             - const response = require('cfn-response');
-            - const {EC2} = require('@aws-sdk/client-ec2');
+            - const {EC2,waitUntilInstanceTerminated} = require('@aws-sdk/client-ec2');
             - const ec2 = new EC2();
             - const regexIP = /\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/;
             - function toInt(ip) {return ip.split('.').map((octet, index, array) =>
@@ -1480,11 +1463,12 @@ Resources:
             - if (physicalId == 'none') {
             - return success({});
             - '}'
-            - 'let deleteParams = {InstanceIds: physicalId.split('':'')};'
-            - ec2.terminateInstances(deleteParams).then((data)=>
-            - ec2.waitFor('instanceTerminated', deleteParams)
-            - ).then((data) => success({})
-            - ').catch((e) => failed({Error: e}));'
+            - 'const deleteParams = {InstanceIds: physicalId.split('':'')};'
+            - ec2.terminateInstances(deleteParams).then((data)=> {
+            - console.log('Waiting for instances to terminate...');
+            - return waitUntilInstanceTerminated({client: ec2}, deleteParams);
+            - '}).then((data) => { console.log(''Instances terminated successfully''); return success({});}'
+            - ').catch((e) => { console.log(''Terminating failed: '' + e); return failed({Error: ''Error when terminating instances: '' + e}); } );'
             - '} else {'
             - 'return failed({Error: ''In-place updates not supported.''});'
             - '}'
@@ -1569,7 +1553,7 @@ Resources:
               data2) {'
             - '         if (err) { console.log(err, err.stack); }'
             - '         return response.send(event, context, response.SUCCESS, { DBPassword:
-              data1.CiphertextBlob.toString(''base64''), ExasolPassword: data2.CiphertextBlob.toString(''base64'')
+              Buffer.from(data1.CiphertextBlob).toString(''base64''), ExasolPassword: Buffer.from(data2.CiphertextBlob).toString(''base64'')
               });'
             - '      });'
             - '  });'
@@ -1841,12 +1825,6 @@ Resources:
         Fn::Base64: !Join
           - ''
           - - "mkdir -p /var/lib/exawolke/\n"
-            - LICENSE='
-            - !Ref 'License'
-            - "'\n"
-            - "if ! [[ -z ${LICENSE//} ]]; then mv /usr/opt/EXAWolke/etc/exasolution.lic\
-              \ /usr/opt/EXAWolke/etc/exasolution.lic_backup; echo $LICENSE > /usr/opt/EXAWolke/etc/exasolution.lic;\
-              \ fi\n"
             - FIRSTDATANODEIP='
             - !GetAtt 'IpCalc.FirstDataNodeIp'
             - "'\n"

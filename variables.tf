@@ -84,12 +84,6 @@ variable "open_ports" {
   type        = string
 }
 
-variable "license" {
-  default     = null
-  description = "A path to license file that can be used with Bring Your Own License (BYOL) installation."
-  type        = string
-}
-
 variable "management_server_instance_type" {
   default     = "m5.large"
   description = "An EC2 instance type for the Exasol management server."

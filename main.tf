@@ -12,7 +12,7 @@ resource "aws_cloudformation_stack" "exasol_cluster" {
   name = var.cluster_name
   capabilities = ["CAPABILITY_IAM"]
   on_failure   = "DELETE"
-  template_url = "https://exasol-cf-templates.s3.eu-central-1.amazonaws.com/cloudformation_template_v1.1.0.yml"
+  template_url = "https://exasol-cf-templates.s3.eu-central-1.amazonaws.com/cloudformation_template_v2.0.0.yml"
   parameters = {
     DBSystemName              = var.database_name
     DBPassword                = var.sys_user_password
@@ -31,7 +31,6 @@ resource "aws_cloudformation_stack" "exasol_cluster" {
     CreateKMSEndpoint         = var.create_kms_endpoint
     CreateEC2Endpoint         = var.create_ec2_endpoint
     OpenPorts                 = var.open_ports
-    License                   = var.license == null ? null : file(var.license)
     OwnerTag                  = var.owner
     ProjectTag                = var.project
   }

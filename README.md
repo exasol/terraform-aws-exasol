@@ -155,7 +155,6 @@ The following configuration variables are available.
 | `datanode_instance_type`          | `m5.xlarge`      | An EC2 instance type for Exasol datanodes.                                                        |
 | `datanode_count`                  | `3`              | The number of Exasol datanodes.                                                                   |
 | `standbynode_count`               | `0`              | The number of Exasol standby nodes.                                                               |
-| `license`                         | `null`           | An optional path for the Bring Your Own (BYOL) image license file, e.g, `./mor_byol_license.xml`. |
 | `public_ip`                       | `true`           | A boolean variable whether to set public IPv4 address to nodes. Skips waiting if set to `false`.  |
 | `key_pair_name`                   | _<none>_         | An EC2 key pair name to attach to nodes.                                                          |
 | `subnet_id`                       | _<none>_         | A subnet id to deploy the Exasol cluster.                                                         |

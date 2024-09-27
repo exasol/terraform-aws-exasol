@@ -7,3 +7,5 @@ venv/
 .DS_Store
 # This is ignored because lock files are only relevant when the Terraform template is used
 /.terraform.lock.hcl
+/lambda-test
+/test/simple_exasol_setup/exasol_xmlrpc_polling.log
