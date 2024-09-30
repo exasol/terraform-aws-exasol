@@ -1,21 +1,18 @@
 data "aws_ami" "exasol" {
   most_recent = true
-  owners = [
-  var.ami_image_owner]
+  owners      = [var.ami_image_owner]
 
   filter {
-    name = "name"
-    values = [
-    "*${var.ami_image_name}-*"]
+    name   = "name"
+    values = ["*${var.ami_image_name}*"]
   }
 }
 
 resource "aws_cloudformation_stack" "exasol_cluster" {
-  name = var.cluster_name
-  capabilities = [
-  "CAPABILITY_IAM"]
+  name         = var.cluster_name
+  capabilities = ["CAPABILITY_IAM"]
   on_failure   = "DELETE"
-  template_url = "https://exasol-cf-templates.s3.eu-central-1.amazonaws.com/cloudformation_template_v1.0.4.yml"
+  template_url = "https://exasol-cf-templates.s3.eu-central-1.amazonaws.com/cloudformation_template_v2.0.0.yml"
   parameters = {
     DBSystemName              = var.database_name
     DBPassword                = var.sys_user_password
@@ -34,7 +31,6 @@ resource "aws_cloudformation_stack" "exasol_cluster" {
     CreateKMSEndpoint         = var.create_kms_endpoint
     CreateEC2Endpoint         = var.create_ec2_endpoint
     OpenPorts                 = var.open_ports
-    License                   = var.license == null ? null : file(var.license)
     OwnerTag                  = var.owner
     ProjectTag                = var.project
   }
@@ -60,9 +56,8 @@ data "aws_instance" "management_server" {
 }
 
 resource "null_resource" "exasol_cluster_wait" {
-  count = var.public_ip ? 1 : 0
-  depends_on = [
-  aws_cloudformation_stack.exasol_cluster]
+  count      = var.public_ip ? 1 : 0
+  depends_on = [aws_cloudformation_stack.exasol_cluster]
 
   triggers = {
     always = uuid()
@@ -83,6 +78,5 @@ resource "null_resource" "exasol_cluster_wait" {
 }
 
 resource "null_resource" "exasol_waited_on" {
-  depends_on = [
-  null_resource.exasol_cluster_wait]
+  depends_on = [null_resource.exasol_cluster_wait]
 }

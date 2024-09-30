@@ -28,7 +28,7 @@ module "exasol" {
 
   cluster_name                    = "exasol-cluster"
   database_name                   = "exadb"
-  ami_image_name                  = "R6.2.3-PAYG"
+  ami_image_name                  = "Exasol-R7.1.26-PAYG"
   sys_user_password               = "eXaSol1337DB"
   admin_user_password             = "eXaSol1337OP"
   management_server_instance_type = "m5.xlarge"
@@ -148,14 +148,13 @@ The following configuration variables are available.
 | `cluster_name`                    | `exasol-cluster` | A name for the to be deployed cluster.                                                            |
 | `database_name`                   | `exadb`          | A name of the Exasol database.                                                                    |
 | `ami_image_id`                    | `null`           | An Exasol release AMI image id, e.g, `ami-05fad9f0c2609cef0`.                                     |
-| `ami_image_name`                  | _<none>_         | An Exasol release AMI image name, e.g, `R6.1.5-PAYG` or `R6.2.1-BYOL`.                            |
+| `ami_image_name`                  | _<none>_         | An Exasol release AMI image name, e.g, `Exasol-R7.1.26-PAYG`.                                     |
 | `sys_user_password`               | _<none>_         | An Exasol database `sys` user password.                                                           |
 | `admin_user_password`             | _<none>_         | An EXAOperation `admin` user password.                                                            |
 | `management_server_instance_type` | `m5.large`       | An EC2 instance type for management server.                                                       |
 | `datanode_instance_type`          | `m5.xlarge`      | An EC2 instance type for Exasol datanodes.                                                        |
 | `datanode_count`                  | `3`              | The number of Exasol datanodes.                                                                   |
 | `standbynode_count`               | `0`              | The number of Exasol standby nodes.                                                               |
-| `license`                         | `null`           | An optional path for the Bring Your Own (BYOL) image license file, e.g, `./mor_byol_license.xml`. |
 | `public_ip`                       | `true`           | A boolean variable whether to set public IPv4 address to nodes. Skips waiting if set to `false`.  |
 | `key_pair_name`                   | _<none>_         | An EC2 key pair name to attach to nodes.                                                          |
 | `subnet_id`                       | _<none>_         | A subnet id to deploy the Exasol cluster.                                                         |
