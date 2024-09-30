@@ -1,4 +1,4 @@
-# terraform-aws-exasol 2.0.0, released 2024-09-27
+# terraform-aws-exasol 2.0.0, released 2024-09-30
 
 Code name: Update CloudFormation template and new DB version
 
