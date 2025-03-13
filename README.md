@@ -1,3 +1,8 @@
+> **🚨 This project has been archived!**
+> 
+> This means the repository is no longer maintained, and new features or fixes are not planned.
+
+
 # Exasol AWS Terraform Module
 
 <img alt="terraform-aws-exasol logo" src="doc/images/terraform-aws-exasol_128x128.png" style="float:left; padding:0px 10px 10px 10px;"/>
